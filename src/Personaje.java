@@ -196,6 +196,11 @@ public abstract class Personaje {
         this.suerte = suerte;
     }
 
+    public void setpSalud(int pSalud) {
+        this.pSalud = pSalud;
+    }
+      
+
     @Override
     public String toString() {
         return nom + " " + categoria + "-" + devocion + "\n"+

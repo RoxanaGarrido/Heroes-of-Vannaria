@@ -45,12 +45,24 @@ public class HeroesOfVannaria {
     public void leerDatos(String nomArxiu) {
 
         Path path = Paths.get(nomArxiu);
+        boolean finalizado = false;
+        int indiceArma = 0;
+
         try {
             BufferedReader in = Files.newBufferedReader(path, Charset.forName("UTF-8"));
             String linea = in.readLine(); //línea plantilla
             linea = in.readLine();
             while (linea != null) {
                 String[] dades = linea.split(";");
+
+                for (int j = 0; j < armas.size(); j++) {
+                    if (armas.get(j).getNom().equals(dades[9]) && !finalizado) {
+                        finalizado = true;
+                        indiceArma = j;
+                    }
+                }
+
+                /*
                 Arma arma = new Arma();
                 if (dades[9].equalsIgnoreCase("Daga")) {
                     arma = armas.get(0);
@@ -59,61 +71,61 @@ public class HeroesOfVannaria {
                 } else if (dades[9].equals("Martillo")) {
                     arma = armas.get(2);
                 }
-                
-                switch(dades[1]){
-            case "Guerrero": 
-                if(dades[10].equals("Orden")){
-                     GuerreroOrden personaje = new GuerreroOrden(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
-                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
-                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
-                      personajes.add(personaje);
-                }else{
-                    GuerreroCaos personaje = new GuerreroCaos(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
-                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
-                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
-                     personajes.add(personaje);
+                 */
+                switch (dades[1]) {
+                    case "Guerrero":
+                        if (dades[10].equals("Orden")) {
+                            GuerreroOrden personaje = new GuerreroOrden(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                                    Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                                    Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), armas.get(indiceArma), dades[10]);
+                            personajes.add(personaje);
+                        } else {
+                            GuerreroCaos personaje = new GuerreroCaos(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                                    Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                                    Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), armas.get(indiceArma), dades[10]);
+                            personajes.add(personaje);
+                        }
+                        break;
+                    case "Caballero":
+                        if (dades[10].equals("Orden")) {
+                            CaballeroOrden personaje = new CaballeroOrden(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                                    Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                                    Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), armas.get(indiceArma), dades[10]);
+                            personajes.add(personaje);
+                        } else {
+                            CaballeroCaos personaje = new CaballeroCaos(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                                    Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                                    Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), armas.get(indiceArma), dades[10]);
+                            personajes.add(personaje);
+                        }
+                        break;
+                    case "Valquiria":
+                        if (dades[10].equals("Orden")) {
+                            ValquiriaOrden personaje = new ValquiriaOrden(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                                    Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                                    Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), armas.get(indiceArma), dades[10]);
+                            personajes.add(personaje);
+                        } else {
+                            ValquiriaCaos personaje = new ValquiriaCaos(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                                    Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                                    Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), armas.get(indiceArma), dades[10]);
+                            personajes.add(personaje);
+                        }
+                        break;
+                    case "Asesino":
+                        if (dades[10].equals("Orden")) {
+                            AsesinoOrden personaje = new AsesinoOrden(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                                    Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                                    Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), armas.get(indiceArma), dades[10]);
+                            personajes.add(personaje);
+                        } else {
+                            AsesinoCaos personaje = new AsesinoCaos(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                                    Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                                    Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), armas.get(indiceArma), dades[10]);
+                            personajes.add(personaje);
+                        }
+                        break;
                 }
-                break;
-            case "Caballero": 
-                if(dades[10].equals("Orden")){
-                    CaballeroOrden personaje = new CaballeroOrden(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
-                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
-                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
-                     personajes.add(personaje);
-                }else{
-                    CaballeroCaos personaje = new CaballeroCaos(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
-                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
-                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
-                     personajes.add(personaje);
-                }
-                break;
-            case "Valquiria": 
-                if(dades[10].equals("Orden")){
-                    ValquiriaOrden personaje = new ValquiriaOrden(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
-                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
-                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
-                     personajes.add(personaje);
-                }else{
-                     ValquiriaCaos personaje = new ValquiriaCaos(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
-                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
-                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
-                     personajes.add(personaje);
-                }
-                break;
-            case "Asesino": 
-                if(dades[10].equals("Orden")){
-                    AsesinoOrden personaje = new AsesinoOrden(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
-                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
-                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
-                     personajes.add(personaje);
-                }else{
-                     AsesinoCaos personaje = new AsesinoCaos(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
-                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
-                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
-                     personajes.add(personaje);
-                }
-                break;
-        }
                 linea = in.readLine();
             }
         } catch (IOException ex) {
@@ -168,7 +180,7 @@ public class HeroesOfVannaria {
      * guardarlo en el archivo csv al finalizar el programa.
      */
     private void crearPersonaje() {
-        
+
         int fuerza = 0, constitucion = 0, velocidad = 0, inteligencia = 0, suerte = 0, devocion = 0, categoria = 0;
         int puntosIniciales = 45;
 
@@ -239,57 +251,55 @@ public class HeroesOfVannaria {
         System.out.println("1. " + armas.get(0));
         System.out.println("2. " + armas.get(1));
         System.out.println("3. " + armas.get(2));
-        int op = Tools.llegeixEnterRang(in, 1, 3); 
-        
-        switch(categoria){
+        int op = Tools.llegeixEnterRang(in, 1, 3);
+
+        switch (categoria) {
             case 1: //Guerrero
-                if(devocion == 1){ // Orden
-                     GuerreroOrden personaje = new GuerreroOrden(nom, "Guerrero", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Orden");
-                      personajes.add(personaje);
-                }else{
+                if (devocion == 1) { // Orden
+                    GuerreroOrden personaje = new GuerreroOrden(nom, "Guerrero", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Orden");
+                    personajes.add(personaje);
+                } else {
                     GuerreroCaos personaje = new GuerreroCaos(nom, "Guerrero", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Caos");
-                     personajes.add(personaje);
+                    personajes.add(personaje);
                 }
                 break;
             case 2: //Caballero
-                if(devocion == 1){
+                if (devocion == 1) {
                     CaballeroOrden personaje = new CaballeroOrden(nom, "Caballero", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Orden");
-                     personajes.add(personaje);
-                }else{
+                    personajes.add(personaje);
+                } else {
                     CaballeroCaos personaje = new CaballeroCaos(nom, "Caballero", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Caos");
-                     personajes.add(personaje);
+                    personajes.add(personaje);
                 }
                 break;
             case 3: //Valquiria
-                if(devocion == 1){
+                if (devocion == 1) {
                     ValquiriaOrden personaje = new ValquiriaOrden(nom, "Valquiria", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Orden");
-                     personajes.add(personaje);
-                }else{
+                    personajes.add(personaje);
+                } else {
                     ValquiriaCaos personaje = new ValquiriaCaos(nom, "Valquiria", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Caos");
-                     personajes.add(personaje);
+                    personajes.add(personaje);
                 }
                 break;
             case 4: //Asesino
-                if(devocion == 1){
+                if (devocion == 1) {
                     AsesinoOrden personaje = new AsesinoOrden(nom, "Asesino", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Orden");
-                     personajes.add(personaje);
-                }else{
+                    personajes.add(personaje);
+                } else {
                     AsesinoCaos personaje = new AsesinoCaos(nom, "Asesino", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Caos");
-                     personajes.add(personaje);
+                    personajes.add(personaje);
                 }
                 break;
         }
-        
-       
+
         System.out.println("");
         System.out.println("NUEVO PERSONAJE CREADO!");
         System.out.println("");
         System.out.println("Presione una tecla para volver al menú principal...");
 
     }
-        
 
-    private void modificarPersonaje(ArrayList<Personaje> personajes){
+    private void modificarPersonaje(ArrayList<Personaje> personajes) {
         int fuerza = 0, constitucion = 0, velocidad = 0, inteligencia = 0, suerte = 0;
         int puntosIniciales = 45;
         System.out.println("Selecciona un personaje");
@@ -299,11 +309,11 @@ public class HeroesOfVannaria {
             System.out.println(i + " " + personaje.getNom());
         }
         System.out.println("");
-        int opcio = Tools.llegeixEnterRang(in, 0, personajes.size()-1);
+        int opcio = Tools.llegeixEnterRang(in, 0, personajes.size() - 1);
         System.out.println("NUEVO NOMBRE para " + personajes.get(opcio).getNom());
         String nom = in.nextLine();
         System.out.println("");
-         System.out.println("ESTADÍSTICAS:");
+        System.out.println("ESTADÍSTICAS:");
         System.out.printf("Reparte %d puntos entre...\n", puntosIniciales);
         System.out.println("1. FUERZA");
         System.out.println("2. CONSTITUCIÓN");
@@ -343,26 +353,26 @@ public class HeroesOfVannaria {
                     break;
             }
         } while (puntosIniciales > 0);
-        
+
         personajes.get(opcio).setNom(nom);
         personajes.get(opcio).setFuerza(fuerza);
         personajes.get(opcio).setConstitucion(constitucion);
         personajes.get(opcio).setInteligencia(inteligencia);
         personajes.get(opcio).setSuerte(suerte);
         personajes.get(opcio).setVelocidad(velocidad);
-        
+
         personajes.get(opcio).calculaDerivadas();
-        
+
         System.out.println("");
         System.out.println("Guardando Cambios");
         System.out.println("...");
         System.out.println("...");
         System.out.println("...");
         System.out.println("Hecho!");
-         System.out.println("");
-        System.out.println("Presione una tecla para volver al menú principal...");      
+        System.out.println("");
+        System.out.println("Presione una tecla para volver al menú principal...");
     }
-    
+
     private void reescribeCSV(String ruta) {
 
         Path path = Paths.get(ruta);
@@ -375,80 +385,13 @@ public class HeroesOfVannaria {
             sortida.newLine();
             for (int i = 0; i < personajes.size(); i++) {
                 Personaje personaje = personajes.get(i);
-                switch(personajes.get(i).getClass().getSimpleName()){
-                    case "AsesinoCaos":
-                        sortida.write(((AsesinoCaos)personaje).getNom() + ";" + ((AsesinoCaos)personaje).getCategoria() + ";" + ((AsesinoCaos)personaje).getFuerza()
-                        + ";" + ((AsesinoCaos)personaje).getConstitucion() + ";" + ((AsesinoCaos)personaje).getVelocidad() + ";"
-                        + ((AsesinoCaos)personaje).getInteligencia() + ";" + ((AsesinoCaos)personaje).getSuerte() + ";"
-                        + ((AsesinoCaos)personaje).getNivel() + ";" + ((AsesinoCaos)personaje).getpExperiencia() + ";"
-                        + ((AsesinoCaos)personaje).getArma().getNom() + ";" +((AsesinoCaos)personaje).getDevocion());
-                sortida.newLine();
-                        break;
-                    case "AsesinoOrden":
-                         sortida.write(((AsesinoOrden)personaje).getNom() + ";" + ((AsesinoOrden)personaje).getCategoria() + ";" + ((AsesinoOrden)personaje).getFuerza()
-                        + ";" + ((AsesinoOrden)personaje).getConstitucion() + ";" + ((AsesinoOrden)personaje).getVelocidad() + ";"
-                        + ((AsesinoOrden)personaje).getInteligencia() + ";" + ((AsesinoOrden)personaje).getSuerte() + ";"
-                        + ((AsesinoOrden)personaje).getNivel() + ";" + ((AsesinoOrden)personaje).getpExperiencia() + ";"
-                        + ((AsesinoOrden)personaje).getArma().getNom() + ";" +((AsesinoOrden)personaje).getDevocion());
-                sortida.newLine();
-                        break;
-                    case "CaballeroCaos":
-                         sortida.write(((CaballeroCaos)personaje).getNom() + ";" + ((CaballeroCaos)personaje).getCategoria() + ";" + ((CaballeroCaos)personaje).getFuerza()
-                        + ";" + ((CaballeroCaos)personaje).getConstitucion() + ";" + ((CaballeroCaos)personaje).getVelocidad() + ";"
-                        + ((CaballeroCaos)personaje).getInteligencia() + ";" + ((CaballeroCaos)personaje).getSuerte() + ";"
-                        + ((CaballeroCaos)personaje).getNivel() + ";" + ((CaballeroCaos)personaje).getpExperiencia() + ";"
-                        + ((CaballeroCaos)personaje).getArma().getNom() + ";" +((CaballeroCaos)personaje).getDevocion());
-                sortida.newLine();
-                        break;
-                    case "CaballeroOrden":
-                        sortida.write(((CaballeroOrden)personaje).getNom() + ";" + ((CaballeroOrden)personaje).getCategoria() + ";" + ((CaballeroOrden)personaje).getFuerza()
-                        + ";" + ((CaballeroOrden)personaje).getConstitucion() + ";" + ((CaballeroOrden)personaje).getVelocidad() + ";"
-                        + ((CaballeroOrden)personaje).getInteligencia() + ";" + ((CaballeroOrden)personaje).getSuerte() + ";"
-                        + ((CaballeroOrden)personaje).getNivel() + ";" + ((CaballeroOrden)personaje).getpExperiencia() + ";"
-                        + ((CaballeroOrden)personaje).getArma().getNom() + ";" +((CaballeroOrden)personaje).getDevocion());
-                sortida.newLine();
-                        break;
-                    case "GuerreroCaos":
-                         sortida.write(((GuerreroCaos)personaje).getNom() + ";" + ((GuerreroCaos)personaje).getCategoria() + ";" + ((GuerreroCaos)personaje).getFuerza()
-                        + ";" + ((GuerreroCaos)personaje).getConstitucion() + ";" + ((GuerreroCaos)personaje).getVelocidad() + ";"
-                        + ((GuerreroCaos)personaje).getInteligencia() + ";" + ((GuerreroCaos)personaje).getSuerte() + ";"
-                        + ((GuerreroCaos)personaje).getNivel() + ";" + ((GuerreroCaos)personaje).getpExperiencia() + ";"
-                        + ((GuerreroCaos)personaje).getArma().getNom() + ";" +((GuerreroCaos)personaje).getDevocion());
-                          sortida.newLine();
-                        break;
-                    case "GuerreroOrden":
-                        sortida.write(((GuerreroOrden)personaje).getNom() + ";" + ((GuerreroOrden)personaje).getCategoria() + ";" + ((GuerreroOrden)personaje).getFuerza()
-                        + ";" + ((GuerreroOrden)personaje).getConstitucion() + ";" + ((GuerreroOrden)personaje).getVelocidad() + ";"
-                        + ((GuerreroOrden)personaje).getInteligencia() + ";" + ((GuerreroOrden)personaje).getSuerte() + ";"
-                        + ((GuerreroOrden)personaje).getNivel() + ";" + ((GuerreroOrden)personaje).getpExperiencia() + ";"
-                        + ((GuerreroOrden)personaje).getArma().getNom() + ";" +((GuerreroOrden)personaje).getDevocion());
-                          sortida.newLine();
-                        break;
-                    case "ValquiriaCaos":
-                         sortida.write(((ValquiriaCaos)personaje).getNom() + ";" + ((ValquiriaCaos)personaje).getCategoria() + ";" + ((ValquiriaCaos)personaje).getFuerza()
-                        + ";" + ((ValquiriaCaos)personaje).getConstitucion() + ";" + ((ValquiriaCaos)personaje).getVelocidad() + ";"
-                        + ((ValquiriaCaos)personaje).getInteligencia() + ";" + ((ValquiriaCaos)personaje).getSuerte() + ";"
-                        + ((ValquiriaCaos)personaje).getNivel() + ";" + ((ValquiriaCaos)personaje).getpExperiencia() + ";"
-                        + ((ValquiriaCaos)personaje).getArma().getNom() + ";" +((ValquiriaCaos)personaje).getDevocion());
-                          sortida.newLine();
-                        break;
-                    case "ValquiriaOrden":
-                        sortida.write(((ValquiriaOrden)personaje).getNom() + ";" + ((ValquiriaOrden)personaje).getCategoria() + ";" + ((ValquiriaOrden)personaje).getFuerza()
-                        + ";" + ((ValquiriaOrden)personaje).getConstitucion() + ";" + ((ValquiriaOrden)personaje).getVelocidad() + ";"
-                        + ((ValquiriaOrden)personaje).getInteligencia() + ";" + ((ValquiriaOrden)personaje).getSuerte() + ";"
-                        + ((ValquiriaOrden)personaje).getNivel() + ";" + ((ValquiriaOrden)personaje).getpExperiencia() + ";"
-                        + ((ValquiriaOrden)personaje).getArma().getNom() + ";" +((ValquiriaOrden)personaje).getDevocion());
-                          sortida.newLine();
-                        break;
-                }
-                /*
                 sortida.write(personaje.getNom() + ";" + personaje.getCategoria() + ";" + personaje.getFuerza()
                         + ";" + personaje.getConstitucion() + ";" + personaje.getVelocidad() + ";"
                         + personaje.getInteligencia() + ";" + personaje.getSuerte() + ";"
                         + personaje.getNivel() + ";" + personaje.getpExperiencia() + ";"
-                        + personaje.getArma().getNom() + personaje.getDevocion());
+                        + personaje.getArma().getNom() + ";" +personaje.getDevocion());
                 sortida.newLine();
-                */
+
             }
             sortida.close();
         } catch (IOException ex) {
@@ -482,11 +425,13 @@ public class HeroesOfVannaria {
         int c1 = Tools.llegeixEnterRang(in, 1, personajes.size());
         Personaje atacante = personajes.remove(c1 - 1);
 
+        String categoriaAtacant = atacante.getClass().getSimpleName();
         System.out.println("Selecciona el segundo contrincante:");
         mostrarArrayPersonajes(personajes);
         int c2 = Tools.llegeixEnterRang(in, 1, personajes.size());
         Personaje defensor = personajes.get(c2 - 1);
 
+        String categoriaDefensor = defensor.getClass().getSimpleName();
         personajes.add(c1 - 1, atacante);
         Personaje tmp;
         if (atacante.getVelocidad() < defensor.getVelocidad()) {
@@ -499,8 +444,8 @@ public class HeroesOfVannaria {
         System.out.println("         />_________________________________\n"
                 + "[########[]_________________________________>\n"
                 + "         \\>");
-        System.out.println(atacante.getNom().toUpperCase() +"("+ atacante.getCategoria() + "-"+atacante.getDevocion()+")" + " VS " + 
-                defensor.getNom().toUpperCase() +"("+ defensor.getCategoria() + "-"+defensor.getDevocion()+")");
+        System.out.println(atacante.getNom().toUpperCase() + "(" + atacante.getCategoria() + "-" + atacante.getDevocion() + ")" + " VS "
+                + defensor.getNom().toUpperCase() + "(" + defensor.getCategoria() + "-" + defensor.getDevocion() + ")");
         boolean combateFinalizado = false;
         int ronda = 1;
         while (!combateFinalizado) {
@@ -515,12 +460,112 @@ public class HeroesOfVannaria {
                     if (ps < 0) {
                         ps = 0;
                     }
-                    System.out.println("✚ Puntos de salud restantes ---> " + ps);
+                    System.out.println("✚ Puntos de salud restantes ---> " + ps);        
+                    if (OrdenCaos(defensor)) {          
+                        switch (categoriaDefensor) {                 
+                            case "AsesinoOrden":
+                                ((AsesinoOrden)defensor).recuperaParcialmentPS();
+                                /*
+                                ps = ((AsesinoOrden) defensor).getpSalud();
+                                System.out.println("✚ Puntos de salud restantes ---> " + ps);
+*/
+                                break;
+                            case "CaballeroOrden":
+                                ((CaballeroOrden)defensor).recuperaParcialmentPS();
+                                /*
+                                ps = ((CaballeroOrden) defensor).getpSalud();
+                                System.out.println("✚ Puntos de salud restantes ---> " + ps);
+*/
+                                break;
+                            case "GuerreroOrden":
+                                ((GuerreroOrden)defensor).recuperaParcialmentPS();   
+                                /*
+                                ps = ((CaballeroOrden) defensor).getpSalud();
+                                System.out.println("✚ Puntos de salud restantes ---> " + ps);
+*/
+                                break;
+                            case "ValquiriaOrden":
+                                ((ValquiriaOrden)defensor).recuperaParcialmentPS();    
+                                /*
+                                ps = ((CaballeroOrden) defensor).getpSalud();                      
+                                System.out.println("✚ Puntos de salud restantes ---> " + ps);
+*/
+                                break;
+                        }
+                        System.out.println("PERO recupera puntos de salud parcialmente");
+                        ps = defensor.getpSalud();
+                        if(ps < 0){
+                            ps = 0;
+                        }
+                         System.out.println("✚ Puntos de salud restantes ---> " + ps);
+
+                    }
+
                 } else {
                     System.out.println(defensor.getNom() + " esquiva el ataque!");
+                    if (!OrdenCaos(defensor)) {
+                        boolean contraataca = false;
+                        switch (categoriaDefensor) {
+                            case "AsesinoCaos":
+                                contraataca = ((AsesinoCaos) defensor).contraataca(dado1, dado2, dado3);
+                                break;
+                            case "CaballeroCaos":
+                                contraataca = ((CaballeroCaos) defensor).contraataca(dado1, dado2, dado3);
+                                break;
+                            case "GuerreroCaos":
+                                contraataca = ((GuerreroCaos) defensor).contraataca(dado1, dado2, dado3);
+                                break;
+                            case "ValquiriaCaos":
+                                contraataca = ((ValquiriaCaos) defensor).contraataca(dado1, dado2, dado3);
+                                break;
+                        }
+                        if (contraataca) {
+                            System.out.println("...y contraataca exitosamente");
+                            atacante.repDany(defensor);
+                            System.out.println(atacante.getNom() + " recibe " + defensor.getpDany() + " puntos de Daño...");
+                            int ps = atacante.getpSalud();
+                            if (ps < 0) {
+                                ps = 0;
+                            }
+                            System.out.println("✚ Puntos de salud restantes ---> " + ps);
+                        }else{
+                            System.out.println("Sin probabilidad de contraataque");
+                        }
+                    }
+
                 }
+
             } else {
                 System.out.println(atacante.getNom() + " ha fallado el ataque...");
+                if (!OrdenCaos(defensor)) {
+                    boolean contraataca = false;
+                    switch (categoriaDefensor) {
+                        case "AsesinoCaos":
+                            contraataca = ((AsesinoCaos) defensor).contraataca(dado1, dado2, dado3);
+                            break;
+                        case "CaballeroCaos":
+                            contraataca = ((CaballeroCaos) defensor).contraataca(dado1, dado2, dado3);
+                            break;
+                        case "GuerreroCaos":
+                            contraataca = ((GuerreroCaos) defensor).contraataca(dado1, dado2, dado3);
+                            break;
+                        case "ValquiriaCaos":
+                            contraataca = ((ValquiriaCaos) defensor).contraataca(dado1, dado2, dado3);
+                            break;
+                    }
+                    if (contraataca) {
+                        System.out.println("...y contraataca exitosamente");
+                        atacante.repDany(defensor);
+                        System.out.println(atacante.getNom() + " recibe " + defensor.getpDany() + " puntos de Daño...");
+                        int ps = atacante.getpSalud();
+                        if (ps < 0) {
+                            ps = 0;
+                        }
+                        System.out.println("✚ Puntos de salud restantes ---> " + ps);
+                    }else{
+                        System.out.println("Sin probabilidad de contraataque");
+                    }
+                }
             }
 
             if (defensor.getpSalud() <= 0) {
@@ -545,6 +590,16 @@ public class HeroesOfVannaria {
 
         System.out.println("");
         System.out.println("Presione una tecla para volver al menú principal...");
+    }
+
+    private boolean OrdenCaos(Object personaje) {
+        if (personaje.getClass().getSimpleName().equals("AsesinoOrden")
+                || personaje.getClass().getSimpleName().equals("CaballeroOrden")
+                || personaje.getClass().getSimpleName().equals("GuerreroOrden")
+                || personaje.getClass().getSimpleName().equals("ValquiriaOrden")) {
+            return true;
+        }
+        return false;
     }
 
     private String mostraMenu() {

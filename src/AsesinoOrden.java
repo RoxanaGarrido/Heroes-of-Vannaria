@@ -17,17 +17,17 @@ public class AsesinoOrden extends Asesino implements Orden {
     public AsesinoOrden(String nom, String categoria, int fuerza, int constitucion, int velocidad, int inteligencia, int suerte, int nivel, int pExperiencia, Arma arma, String devocion) {
         super(nom, categoria, fuerza, constitucion, velocidad, inteligencia, suerte, nivel, pExperiencia, arma, devocion);
     }
+    
 
     @Override
     public void recuperaParcialmentPS() {
 
         int pSaludInicial = constitucion + fuerza;
-        int recuperacion = pSaludInicial * 10 / 100;
+        int recuperacion = (int)pSaludInicial * 10 / 100;
 
         if (pSalud < pSaludInicial) {
-            if ((pSalud + recuperacion) <= pSaludInicial) {
-                pSalud += recuperacion;
-            } else {
+            pSalud+=recuperacion;
+            if (pSalud > pSaludInicial) {
                 pSalud = pSaludInicial;
             }
 

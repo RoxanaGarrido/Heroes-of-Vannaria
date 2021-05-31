@@ -20,18 +20,15 @@ public class CaballeroOrden extends Caballero implements Orden{
    
     @Override
     public void recuperaParcialmentPS() {
-        
+         calculaDerivadas();
         int pSaludInicial = constitucion + fuerza + inteligencia;
-        int recuperacion = pSaludInicial * 10 / 100;
+        int recuperacion = (int)pSaludInicial * 10 / 100;
 
         if (pSalud < pSaludInicial) {
-            if ((pSalud + recuperacion) <= pSaludInicial) {
-                pSalud += recuperacion;
-            } else {
+            pSalud+=recuperacion;
+            if (pSalud > pSaludInicial) {
                 pSalud = pSaludInicial;
-            }
-
+            }   
         }
     }
-    
 }
