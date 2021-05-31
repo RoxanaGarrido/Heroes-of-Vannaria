@@ -293,15 +293,16 @@ public class HeroesOfVannaria {
         int fuerza = 0, constitucion = 0, velocidad = 0, inteligencia = 0, suerte = 0;
         int puntosIniciales = 45;
         System.out.println("Selecciona un personaje");
+        System.out.println("");
         for (int i = 0; i < personajes.size(); i++) {
             Personaje personaje = personajes.get(i);
-            System.out.println((i + 1) + " " + personaje.getNom());
-            System.out.println("");
+            System.out.println(i + " " + personaje.getNom());
         }
         System.out.println("");
         int opcio = Tools.llegeixEnterRang(in, 0, personajes.size()-1);
         System.out.println("NUEVO NOMBRE para " + personajes.get(opcio).getNom());
         String nom = in.nextLine();
+        System.out.println("");
          System.out.println("ESTADÍSTICAS:");
         System.out.printf("Reparte %d puntos entre...\n", puntosIniciales);
         System.out.println("1. FUERZA");
@@ -350,6 +351,8 @@ public class HeroesOfVannaria {
         personajes.get(opcio).setSuerte(suerte);
         personajes.get(opcio).setVelocidad(velocidad);
         
+        personajes.get(opcio).calculaDerivadas();
+        
         System.out.println("");
         System.out.println("Guardando Cambios");
         System.out.println("...");
@@ -372,12 +375,80 @@ public class HeroesOfVannaria {
             sortida.newLine();
             for (int i = 0; i < personajes.size(); i++) {
                 Personaje personaje = personajes.get(i);
-                sortida.write(((AsesinoCaos)personaje).getNom() + ";" + personaje.getCategoria() + ";" + personaje.getFuerza()
+                switch(personajes.get(i).getClass().getSimpleName()){
+                    case "AsesinoCaos":
+                        sortida.write(((AsesinoCaos)personaje).getNom() + ";" + ((AsesinoCaos)personaje).getCategoria() + ";" + ((AsesinoCaos)personaje).getFuerza()
+                        + ";" + ((AsesinoCaos)personaje).getConstitucion() + ";" + ((AsesinoCaos)personaje).getVelocidad() + ";"
+                        + ((AsesinoCaos)personaje).getInteligencia() + ";" + ((AsesinoCaos)personaje).getSuerte() + ";"
+                        + ((AsesinoCaos)personaje).getNivel() + ";" + ((AsesinoCaos)personaje).getpExperiencia() + ";"
+                        + ((AsesinoCaos)personaje).getArma().getNom() + ";" +((AsesinoCaos)personaje).getDevocion());
+                sortida.newLine();
+                        break;
+                    case "AsesinoOrden":
+                         sortida.write(((AsesinoOrden)personaje).getNom() + ";" + ((AsesinoOrden)personaje).getCategoria() + ";" + ((AsesinoOrden)personaje).getFuerza()
+                        + ";" + ((AsesinoOrden)personaje).getConstitucion() + ";" + ((AsesinoOrden)personaje).getVelocidad() + ";"
+                        + ((AsesinoOrden)personaje).getInteligencia() + ";" + ((AsesinoOrden)personaje).getSuerte() + ";"
+                        + ((AsesinoOrden)personaje).getNivel() + ";" + ((AsesinoOrden)personaje).getpExperiencia() + ";"
+                        + ((AsesinoOrden)personaje).getArma().getNom() + ";" +((AsesinoOrden)personaje).getDevocion());
+                sortida.newLine();
+                        break;
+                    case "CaballeroCaos":
+                         sortida.write(((CaballeroCaos)personaje).getNom() + ";" + ((CaballeroCaos)personaje).getCategoria() + ";" + ((CaballeroCaos)personaje).getFuerza()
+                        + ";" + ((CaballeroCaos)personaje).getConstitucion() + ";" + ((CaballeroCaos)personaje).getVelocidad() + ";"
+                        + ((CaballeroCaos)personaje).getInteligencia() + ";" + ((CaballeroCaos)personaje).getSuerte() + ";"
+                        + ((CaballeroCaos)personaje).getNivel() + ";" + ((CaballeroCaos)personaje).getpExperiencia() + ";"
+                        + ((CaballeroCaos)personaje).getArma().getNom() + ";" +((CaballeroCaos)personaje).getDevocion());
+                sortida.newLine();
+                        break;
+                    case "CaballeroOrden":
+                        sortida.write(((CaballeroOrden)personaje).getNom() + ";" + ((CaballeroOrden)personaje).getCategoria() + ";" + ((CaballeroOrden)personaje).getFuerza()
+                        + ";" + ((CaballeroOrden)personaje).getConstitucion() + ";" + ((CaballeroOrden)personaje).getVelocidad() + ";"
+                        + ((CaballeroOrden)personaje).getInteligencia() + ";" + ((CaballeroOrden)personaje).getSuerte() + ";"
+                        + ((CaballeroOrden)personaje).getNivel() + ";" + ((CaballeroOrden)personaje).getpExperiencia() + ";"
+                        + ((CaballeroOrden)personaje).getArma().getNom() + ";" +((CaballeroOrden)personaje).getDevocion());
+                sortida.newLine();
+                        break;
+                    case "GuerreroCaos":
+                         sortida.write(((GuerreroCaos)personaje).getNom() + ";" + ((GuerreroCaos)personaje).getCategoria() + ";" + ((GuerreroCaos)personaje).getFuerza()
+                        + ";" + ((GuerreroCaos)personaje).getConstitucion() + ";" + ((GuerreroCaos)personaje).getVelocidad() + ";"
+                        + ((GuerreroCaos)personaje).getInteligencia() + ";" + ((GuerreroCaos)personaje).getSuerte() + ";"
+                        + ((GuerreroCaos)personaje).getNivel() + ";" + ((GuerreroCaos)personaje).getpExperiencia() + ";"
+                        + ((GuerreroCaos)personaje).getArma().getNom() + ";" +((GuerreroCaos)personaje).getDevocion());
+                          sortida.newLine();
+                        break;
+                    case "GuerreroOrden":
+                        sortida.write(((GuerreroOrden)personaje).getNom() + ";" + ((GuerreroOrden)personaje).getCategoria() + ";" + ((GuerreroOrden)personaje).getFuerza()
+                        + ";" + ((GuerreroOrden)personaje).getConstitucion() + ";" + ((GuerreroOrden)personaje).getVelocidad() + ";"
+                        + ((GuerreroOrden)personaje).getInteligencia() + ";" + ((GuerreroOrden)personaje).getSuerte() + ";"
+                        + ((GuerreroOrden)personaje).getNivel() + ";" + ((GuerreroOrden)personaje).getpExperiencia() + ";"
+                        + ((GuerreroOrden)personaje).getArma().getNom() + ";" +((GuerreroOrden)personaje).getDevocion());
+                          sortida.newLine();
+                        break;
+                    case "ValquiriaCaos":
+                         sortida.write(((ValquiriaCaos)personaje).getNom() + ";" + ((ValquiriaCaos)personaje).getCategoria() + ";" + ((ValquiriaCaos)personaje).getFuerza()
+                        + ";" + ((ValquiriaCaos)personaje).getConstitucion() + ";" + ((ValquiriaCaos)personaje).getVelocidad() + ";"
+                        + ((ValquiriaCaos)personaje).getInteligencia() + ";" + ((ValquiriaCaos)personaje).getSuerte() + ";"
+                        + ((ValquiriaCaos)personaje).getNivel() + ";" + ((ValquiriaCaos)personaje).getpExperiencia() + ";"
+                        + ((ValquiriaCaos)personaje).getArma().getNom() + ";" +((ValquiriaCaos)personaje).getDevocion());
+                          sortida.newLine();
+                        break;
+                    case "ValquiriaOrden":
+                        sortida.write(((ValquiriaOrden)personaje).getNom() + ";" + ((ValquiriaOrden)personaje).getCategoria() + ";" + ((ValquiriaOrden)personaje).getFuerza()
+                        + ";" + ((ValquiriaOrden)personaje).getConstitucion() + ";" + ((ValquiriaOrden)personaje).getVelocidad() + ";"
+                        + ((ValquiriaOrden)personaje).getInteligencia() + ";" + ((ValquiriaOrden)personaje).getSuerte() + ";"
+                        + ((ValquiriaOrden)personaje).getNivel() + ";" + ((ValquiriaOrden)personaje).getpExperiencia() + ";"
+                        + ((ValquiriaOrden)personaje).getArma().getNom() + ";" +((ValquiriaOrden)personaje).getDevocion());
+                          sortida.newLine();
+                        break;
+                }
+                /*
+                sortida.write(personaje.getNom() + ";" + personaje.getCategoria() + ";" + personaje.getFuerza()
                         + ";" + personaje.getConstitucion() + ";" + personaje.getVelocidad() + ";"
                         + personaje.getInteligencia() + ";" + personaje.getSuerte() + ";"
                         + personaje.getNivel() + ";" + personaje.getpExperiencia() + ";"
                         + personaje.getArma().getNom() + personaje.getDevocion());
                 sortida.newLine();
+                */
             }
             sortida.close();
         } catch (IOException ex) {
