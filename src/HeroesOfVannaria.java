@@ -24,6 +24,7 @@ public class HeroesOfVannaria {
     private ArrayList<Personaje> personajes;
     private ArrayList<Arma> armas;
     private Scanner in;
+    private int[] nivels = {100, 200, 500, 1000, 2000};
 
     public HeroesOfVannaria() {
         in = new Scanner(System.in);
@@ -58,10 +59,61 @@ public class HeroesOfVannaria {
                 } else if (dades[9].equals("Martillo")) {
                     arma = armas.get(2);
                 }
-                Personaje personaje = new Personaje(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                
+                switch(dades[1]){
+            case "Guerrero": 
+                if(dades[10].equals("Orden")){
+                     GuerreroOrden personaje = new GuerreroOrden(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
                         Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
-                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma);
-                personajes.add(personaje);
+                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
+                      personajes.add(personaje);
+                }else{
+                    GuerreroCaos personaje = new GuerreroCaos(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
+                     personajes.add(personaje);
+                }
+                break;
+            case "Caballero": 
+                if(dades[10].equals("Orden")){
+                    CaballeroOrden personaje = new CaballeroOrden(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
+                     personajes.add(personaje);
+                }else{
+                    CaballeroCaos personaje = new CaballeroCaos(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
+                     personajes.add(personaje);
+                }
+                break;
+            case "Valquiria": 
+                if(dades[10].equals("Orden")){
+                    ValquiriaOrden personaje = new ValquiriaOrden(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
+                     personajes.add(personaje);
+                }else{
+                     ValquiriaCaos personaje = new ValquiriaCaos(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
+                     personajes.add(personaje);
+                }
+                break;
+            case "Asesino": 
+                if(dades[10].equals("Orden")){
+                    AsesinoOrden personaje = new AsesinoOrden(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
+                     personajes.add(personaje);
+                }else{
+                     AsesinoCaos personaje = new AsesinoCaos(dades[0], dades[1], Integer.parseInt(dades[2]), Integer.parseInt(dades[3]),
+                        Integer.parseInt(dades[4]), Integer.parseInt(dades[5]), Integer.parseInt(dades[6]),
+                        Integer.parseInt(dades[7]), Integer.parseInt(dades[8]), arma, dades[10]);
+                     personajes.add(personaje);
+                }
+                break;
+        }
                 linea = in.readLine();
             }
         } catch (IOException ex) {
@@ -77,25 +129,30 @@ public class HeroesOfVannaria {
         boolean salir = false;
         while (!salir) {
             switch (mostraMenu()) {
-                case "1":                 
-                    Tools.netejaPantalla();
+                case "1":
+                    //Tools.netejaPantalla();
                     crearPersonaje();
-                    Tools.pausaFinsTecla();
+                    //Tools.pausaFinsTecla();
                     break;
-                case "2":                  
-                    Tools.netejaPantalla();
+                case "2":
+                    //Tools.netejaPantalla();
                     mostrarArrayPersonajes(personajes);
-                    Tools.pausaFinsTecla();
+                    //Tools.pausaFinsTecla();
                     break;
-                case "3":                  
-                    Tools.netejaPantalla();
+                case "3":
+                    //Tools.netejaPantalla();
                     combate();
-                    Tools.pausaFinsTecla();
+                    //Tools.pausaFinsTecla();
                     break;
                 case "x":
                 case "X":
                     System.out.println("Fin de la partida...");
                     salir = true;
+                    break;
+                case "4":
+                    //Tools.netejaPantalla();
+                    modificarPersonaje(personajes);
+                    //Tools.pausaFinsTecla();
                     break;
                 default:
                     System.out.println("ERROR: opción incorrecta");
@@ -111,37 +168,28 @@ public class HeroesOfVannaria {
      * guardarlo en el archivo csv al finalizar el programa.
      */
     private void crearPersonaje() {
-        String clase = "";
-        int fuerza = 0, constitucion = 0, velocidad = 0, inteligencia = 0, suerte = 0;
-        int puntosIniciales = 60;
+        
+        int fuerza = 0, constitucion = 0, velocidad = 0, inteligencia = 0, suerte = 0, devocion = 0, categoria = 0;
+        int puntosIniciales = 45;
 
         System.out.println("===NUEVO PERSONAJE===");
         System.out.println("█▓▒▓█▀██▀█▄░░▄█▀██▀█▓▒▓█\n"
-                          + "█▓▒░▀▄▄▄▄▄█░░█▄▄▄▄▄▀░▒▓█\n"
-                          + "█▓▓▒░░░░░▒▓░░▓▒░░░░░▒▓▓█");
+                + "█▓▒░▀▄▄▄▄▄█░░█▄▄▄▄▄▀░▒▓█\n"
+                + "█▓▓▒░░░░░▒▓░░▓▒░░░░░▒▓▓█");
         System.out.println("Escoge un NOMBRE LEGENDARIO! ");
         String nom = in.nextLine();
         System.out.println("");
-        System.out.println("¿A qué CLASE pertenecerá tu personaje?");
+        System.out.println("¿A qué CATEGORÍA pertenecerá tu personaje?");
         System.out.println("1. GUERRERO");
         System.out.println("2. CABALLERO");
         System.out.println("3. VALQUIRIA");
         System.out.println("4. ASESINO");
-        int opcio = Tools.llegeixEnterRang(in, 1, 4);
-
-        switch (opcio) {
-            case 1:
-                clase = "Guerrero";
-                break;
-            case 2:
-                clase = "Caballero";
-                break;
-            case 3:
-                clase = "Valquiria";
-                break;
-            case 4:
-                clase = "Asesino";
-        }
+        categoria = Tools.llegeixEnterRang(in, 1, 4);
+        System.out.println("");
+        System.out.println("Escoge la DEVOCIÓN");
+        System.out.println("1. Orden");
+        System.out.println("2. Caos");
+        devocion = Tools.llegeixEnterRang(in, 1, 2);
         System.out.println("");
         System.out.println("ESTADÍSTICAS:");
         System.out.printf("Reparte %d puntos entre...\n", puntosIniciales);
@@ -158,28 +206,30 @@ public class HeroesOfVannaria {
             switch (num) {
                 case 1:
                     System.out.print("FUERZA --> ");
-                    fuerza = Tools.llegeixEnterRang(in, 3, 18);
-                    System.out.println("Restan " + (puntosIniciales -= fuerza) + " puntos");
+                    fuerza = 3 + Tools.llegeixEnterRang(in, 0, Tools.min(15, puntosIniciales));
+                    System.out.println("Restan " + (puntosIniciales = puntosIniciales - fuerza + 3) + " puntos");
                     break;
                 case 2:
                     System.out.print("CONSTITUCIÓN --> ");
-                    constitucion = Tools.llegeixEnterRang(in, 3, 18);
-                    System.out.println("Restan " + (puntosIniciales -= constitucion) + " puntos");
+                    constitucion = 3 + Tools.llegeixEnterRang(in, 0, Tools.min(15, puntosIniciales));
+                    System.out.println("Restan " + (puntosIniciales = puntosIniciales - constitucion + 3) + " puntos");
                     break;
                 case 3:
                     System.out.print("VELOCIDAD --> ");
-                    velocidad = Tools.llegeixEnterRang(in, 3, 18);
-                    System.out.println("Restan " + (puntosIniciales -= velocidad) + " puntos");
+                    velocidad = 3 + Tools.llegeixEnterRang(in, 0, Tools.min(15, puntosIniciales));
+                    System.out.println("Restan " + (puntosIniciales = puntosIniciales - velocidad + 3) + " puntos");
                     break;
                 case 4:
                     System.out.print("INTELIGENCIA --> ");
-                    inteligencia = Tools.llegeixEnterRang(in, 3, 18);
-                    System.out.println("Restan " + (puntosIniciales -= inteligencia) + " puntos");
+                    inteligencia = 3 + Tools.llegeixEnterRang(in, 0, Tools.min(15, puntosIniciales));
+                    System.out.println("Restan " + (puntosIniciales = puntosIniciales - inteligencia + 3) + " puntos");
                     break;
                 case 5:
                     System.out.print("SUERTE --> ");
-                    suerte = Tools.llegeixEnterRang(in, 3, 18);
-                    System.out.println("Restan " + (puntosIniciales -= suerte) + " puntos");
+                    suerte = 3 + Tools.llegeixEnterRang(in, 0, Tools.min(15, puntosIniciales));
+                    System.out.println("Restan " + (puntosIniciales = puntosIniciales - suerte + 3) + " puntos");
+                    break;
+                default:
                     System.out.printf("Aún quedan %d puntos por repartir!\n", puntosIniciales);
             }
         } while (puntosIniciales > 0);
@@ -189,20 +239,127 @@ public class HeroesOfVannaria {
         System.out.println("1. " + armas.get(0));
         System.out.println("2. " + armas.get(1));
         System.out.println("3. " + armas.get(2));
-        int op = Tools.llegeixEnterRang(in, 1, 3);
-
-        Personaje personaje = new Personaje(nom, clase, fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1));
+        int op = Tools.llegeixEnterRang(in, 1, 3); 
+        
+        switch(categoria){
+            case 1: //Guerrero
+                if(devocion == 1){ // Orden
+                     GuerreroOrden personaje = new GuerreroOrden(nom, "Guerrero", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Orden");
+                      personajes.add(personaje);
+                }else{
+                    GuerreroCaos personaje = new GuerreroCaos(nom, "Guerrero", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Caos");
+                     personajes.add(personaje);
+                }
+                break;
+            case 2: //Caballero
+                if(devocion == 1){
+                    CaballeroOrden personaje = new CaballeroOrden(nom, "Caballero", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Orden");
+                     personajes.add(personaje);
+                }else{
+                    CaballeroCaos personaje = new CaballeroCaos(nom, "Caballero", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Caos");
+                     personajes.add(personaje);
+                }
+                break;
+            case 3: //Valquiria
+                if(devocion == 1){
+                    ValquiriaOrden personaje = new ValquiriaOrden(nom, "Valquiria", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Orden");
+                     personajes.add(personaje);
+                }else{
+                    ValquiriaCaos personaje = new ValquiriaCaos(nom, "Valquiria", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Caos");
+                     personajes.add(personaje);
+                }
+                break;
+            case 4: //Asesino
+                if(devocion == 1){
+                    AsesinoOrden personaje = new AsesinoOrden(nom, "Asesino", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Orden");
+                     personajes.add(personaje);
+                }else{
+                    AsesinoCaos personaje = new AsesinoCaos(nom, "Asesino", fuerza, constitucion, velocidad, inteligencia, suerte, armas.get(op - 1), "Caos");
+                     personajes.add(personaje);
+                }
+                break;
+        }
+        
+       
         System.out.println("");
         System.out.println("NUEVO PERSONAJE CREADO!");
-        System.out.println("");
-        System.out.println(personaje);
-
-        personajes.add(personaje);
         System.out.println("");
         System.out.println("Presione una tecla para volver al menú principal...");
 
     }
+        
 
+    private void modificarPersonaje(ArrayList<Personaje> personajes){
+        int fuerza = 0, constitucion = 0, velocidad = 0, inteligencia = 0, suerte = 0;
+        int puntosIniciales = 45;
+        System.out.println("Selecciona un personaje");
+        for (int i = 0; i < personajes.size(); i++) {
+            Personaje personaje = personajes.get(i);
+            System.out.println((i + 1) + " " + personaje.getNom());
+            System.out.println("");
+        }
+        System.out.println("");
+        int opcio = Tools.llegeixEnterRang(in, 0, personajes.size()-1);
+        System.out.println("NUEVO NOMBRE para " + personajes.get(opcio).getNom());
+        String nom = in.nextLine();
+         System.out.println("ESTADÍSTICAS:");
+        System.out.printf("Reparte %d puntos entre...\n", puntosIniciales);
+        System.out.println("1. FUERZA");
+        System.out.println("2. CONSTITUCIÓN");
+        System.out.println("3. VELOCIDAD");
+        System.out.println("4. INTELIGENCIA");
+        System.out.println("5. SUERTE");
+
+        System.out.println("(Escribe [número atributo] [ENTER] [número puntos])");
+        System.out.println("");
+        do {
+            int num = Tools.llegeixEnterRang(in, 1, 5);
+            switch (num) {
+                case 1:
+                    System.out.print("FUERZA --> ");
+                    fuerza = 3 + Tools.llegeixEnterRang(in, 0, Tools.min(15, puntosIniciales));
+                    System.out.println("Restan " + (puntosIniciales = puntosIniciales - fuerza + 3) + " puntos");
+                    break;
+                case 2:
+                    System.out.print("CONSTITUCIÓN --> ");
+                    constitucion = 3 + Tools.llegeixEnterRang(in, 0, Tools.min(15, puntosIniciales));
+                    System.out.println("Restan " + (puntosIniciales = puntosIniciales - constitucion + 3) + " puntos");
+                    break;
+                case 3:
+                    System.out.print("VELOCIDAD --> ");
+                    velocidad = 3 + Tools.llegeixEnterRang(in, 0, Tools.min(15, puntosIniciales));
+                    System.out.println("Restan " + (puntosIniciales = puntosIniciales - velocidad + 3) + " puntos");
+                    break;
+                case 4:
+                    System.out.print("INTELIGENCIA --> ");
+                    inteligencia = 3 + Tools.llegeixEnterRang(in, 0, Tools.min(15, puntosIniciales));
+                    System.out.println("Restan " + (puntosIniciales = puntosIniciales - inteligencia + 3) + " puntos");
+                    break;
+                case 5:
+                    System.out.print("SUERTE --> ");
+                    suerte = 3 + Tools.llegeixEnterRang(in, 0, Tools.min(15, puntosIniciales));
+                    System.out.println("Restan " + (puntosIniciales = puntosIniciales - suerte + 3) + " puntos");
+                    break;
+            }
+        } while (puntosIniciales > 0);
+        
+        personajes.get(opcio).setNom(nom);
+        personajes.get(opcio).setFuerza(fuerza);
+        personajes.get(opcio).setConstitucion(constitucion);
+        personajes.get(opcio).setInteligencia(inteligencia);
+        personajes.get(opcio).setSuerte(suerte);
+        personajes.get(opcio).setVelocidad(velocidad);
+        
+        System.out.println("");
+        System.out.println("Guardando Cambios");
+        System.out.println("...");
+        System.out.println("...");
+        System.out.println("...");
+        System.out.println("Hecho!");
+         System.out.println("");
+        System.out.println("Presione una tecla para volver al menú principal...");      
+    }
+    
     private void reescribeCSV(String ruta) {
 
         Path path = Paths.get(ruta);
@@ -211,15 +368,15 @@ public class HeroesOfVannaria {
             BufferedWriter sortida = Files.newBufferedWriter(path, Charset.forName("UTF-8"),
                     StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
             sortida.write("nom;" + "classe;" + "fuerza;" + "constitucion;" + "velocidad;" + "inteligencia;"
-                    + "suerte;" + "nivel;" + "pExperiencia;" + "arma");
+                    + "suerte;" + "nivel;" + "pExperiencia;" + "arma" + "devocion");
             sortida.newLine();
             for (int i = 0; i < personajes.size(); i++) {
                 Personaje personaje = personajes.get(i);
-                sortida.write(personaje.getNom() + ";" + personaje.getClasse() + ";" + personaje.getFuerza()
+                sortida.write(((AsesinoCaos)personaje).getNom() + ";" + personaje.getCategoria() + ";" + personaje.getFuerza()
                         + ";" + personaje.getConstitucion() + ";" + personaje.getVelocidad() + ";"
                         + personaje.getInteligencia() + ";" + personaje.getSuerte() + ";"
                         + personaje.getNivel() + ";" + personaje.getpExperiencia() + ";"
-                        + personaje.getArma().getNom());
+                        + personaje.getArma().getNom() + personaje.getDevocion());
                 sortida.newLine();
             }
             sortida.close();
@@ -260,7 +417,6 @@ public class HeroesOfVannaria {
         Personaje defensor = personajes.get(c2 - 1);
 
         personajes.add(c1 - 1, atacante);
-
         Personaje tmp;
         if (atacante.getVelocidad() < defensor.getVelocidad()) {
             tmp = atacante;
@@ -272,7 +428,8 @@ public class HeroesOfVannaria {
         System.out.println("         />_________________________________\n"
                 + "[########[]_________________________________>\n"
                 + "         \\>");
-        System.out.println(atacante.getNom().toUpperCase() + " VS " + defensor.getNom().toUpperCase());
+        System.out.println(atacante.getNom().toUpperCase() +"("+ atacante.getCategoria() + "-"+atacante.getDevocion()+")" + " VS " + 
+                defensor.getNom().toUpperCase() +"("+ defensor.getCategoria() + "-"+defensor.getDevocion()+")");
         boolean combateFinalizado = false;
         int ronda = 1;
         while (!combateFinalizado) {
@@ -307,30 +464,16 @@ public class HeroesOfVannaria {
         }
         atacante.restauraPSalud();
         defensor.restauraPSalud();
-        atacante.sumarPExperiencia();
-        subirNivel(atacante, atacante.getpExperiencia());
+
+        atacante.sumarPExperiencia(defensor.getpSalud());
+
+        if (atacante.getpExperiencia() >= nivels[atacante.getNivel()]) {
+            atacante.setpExperiencia(atacante.getpExperiencia() - nivels[atacante.getNivel()]);
+            atacante.subirNivel();
+        }
+
         System.out.println("");
         System.out.println("Presione una tecla para volver al menú principal...");
-    }
-    
-    private void subirNivel(Personaje personaje, int pExperiencia){
-        
-        if(personaje.getpExperiencia() >= 100 && personaje.getpExperiencia() < 200){
-            personaje.setNivel(1);
-            personaje.subirEstadisticas();
-        }else if(personaje.getpExperiencia() >= 200 && personaje.getpExperiencia() < 500){
-            personaje.setNivel(2);
-            personaje.subirEstadisticas();
-        }else if(personaje.getpExperiencia() >= 500 && personaje.getpExperiencia() < 1000){
-            personaje.setNivel(3);
-            personaje.subirEstadisticas();
-        }else if(personaje.getpExperiencia() >= 1000 && personaje.getpExperiencia() < 2000){
-           personaje.setNivel(4);
-           personaje.subirEstadisticas();
-        }else if(personaje.getpExperiencia() >= 2000){
-            personaje.setNivel(5);
-            personaje.subirEstadisticas();
-        }
     }
 
     private String mostraMenu() {
@@ -346,6 +489,7 @@ public class HeroesOfVannaria {
         System.out.println("1. Crear Personaje");
         System.out.println("2. Mostrar Personajes");
         System.out.println("3. Iniciar Combate");
+        System.out.println("4. Modificar Personaje");
         System.out.println("X. Salir");
         return in.nextLine();
     }

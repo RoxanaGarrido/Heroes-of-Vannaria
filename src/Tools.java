@@ -78,4 +78,12 @@ public class Tools {
     }
     return resultat.toString();
   }
+  
+  static int min(int valor1, int valor2){
+      if(valor1 < valor2){
+          return valor1;
+      }else{
+          return valor2;
+      }
+  }
 }

@@ -1,8 +1,1 @@
-nom;classe;fuerza;constitucion;velocidad;inteligencia;suerte;nivel;pExperiencia;arma
-Kasimir;Guerrero;12;12;12;12;12;1;50;Espada
-Eritario;Guerrero;5;6;12;4;12;0;0;Martillo
-Sayako;Asesino;15;10;8;10;17;0;1;Daga
-Korena;Caballero;12;10;7;18;13;0;0;Espada
-Anaxor;Valquiria;10;12;8;18;12;0;1;Martillo
-Ragnark;Asesino;3;0;0;0;5;0;0;Martillo
-Jkor;Asesino;10;10;12;15;13;0;0;Daga
+nom;categoria;fuerza;constitucion;velocidad;inteligencia;suerte;nivel;pExperiencia;arma;devocion

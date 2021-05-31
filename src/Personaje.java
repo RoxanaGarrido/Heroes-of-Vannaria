@@ -8,40 +8,42 @@
  *
  * @author garri
  */
-public class Personaje {
-    
-    private String nom;
-    private String classe;
-    private int fuerza;
-    private int constitucion;
-    private int velocidad;
-    private int inteligencia;
-    private int suerte;
-    private Arma arma;
-    private int pSalud;
-    private int pDany;
-    private int pAtacar;
-    private int pEsquivar;
-    private int nivel;
-    private int pExperiencia;
+public abstract class Personaje {
 
-    public Personaje(String nom, String classe, int fuerza, int constitucion, int velocidad, int inteligencia, int suerte, Arma arma) {
+    protected String nom;
+    protected String categoria;
+    protected int fuerza;
+    protected int constitucion;
+    protected int velocidad;
+    protected int inteligencia;
+    protected int suerte;
+    protected Arma arma;
+    protected int pSalud;
+    protected int pDany;
+    protected int pAtacar;
+    protected int pEsquivar;
+    protected int nivel;
+    protected int pExperiencia;
+    protected String devocion;
+
+    public Personaje(String nom, String categoria, int fuerza, int constitucion, int velocidad, int inteligencia, int suerte, Arma arma, String devocion) {
         this.nom = nom;
-        this.classe = classe;
+        this.categoria = categoria;
         this.fuerza = fuerza;
         this.constitucion = constitucion;
         this.velocidad = velocidad;
         this.inteligencia = inteligencia;
         this.suerte = suerte;
         this.arma = arma;
+        this.devocion = devocion;
         calculaDerivadas();
         nivel = 0;
         pExperiencia = 0;
     }
-    
-    public Personaje(String nom, String classe, int fuerza, int constitucion, int velocidad, int inteligencia, int suerte, int nivel, int pExperiencia, Arma arma) {
+
+    public Personaje(String nom, String categoria, int fuerza, int constitucion, int velocidad, int inteligencia, int suerte, int nivel, int pExperiencia, Arma arma, String devocion) {
         this.nom = nom;
-        this.classe = classe;
+        this.categoria = categoria;
         this.fuerza = fuerza;
         this.constitucion = constitucion;
         this.velocidad = velocidad;
@@ -50,76 +52,60 @@ public class Personaje {
         this.arma = arma;
         this.nivel = nivel;
         this.pExperiencia = pExperiencia;
-         calculaDerivadas();
+        this.devocion = devocion;
+        calculaDerivadas();
     }
 
-    private void calculaDerivadas(){
-        pSalud = constitucion + fuerza;
-        pDany = (fuerza + arma.getWpower())/4;
-        pAtacar = inteligencia + suerte + arma.getWspeed();
-        pEsquivar = velocidad + suerte + inteligencia;
-        
-    }
+    public abstract void calculaDerivadas();
 
     public void setArma(Arma arma) {
         this.arma = arma;
     }
 
-    public boolean ataca(Dado ... dados){
+    public boolean ataca(Dado... dados) {
         int tirada = 0;
         for (int i = 0; i < dados.length; i++) {
             tirada += dados[i].tirada();
         }
-        
+
         return tirada <= pAtacar;
     }
-    
-    public boolean esquiva(Dado ... dados){
+
+    public boolean esquiva(Dado... dados) {
         int tirada = 0;
         for (int i = 0; i < dados.length; i++) {
             tirada += dados[i].tirada();
         }
-        
+
         return tirada <= pEsquivar;
     }
-    
-    public void repDany(Personaje atacante){
+
+    public void repDany(Personaje atacante) {
         pSalud -= atacante.getpDany();
     }
-    
-    public void restauraPSalud(){
+
+    public void restauraPSalud() {
         pSalud = constitucion + fuerza;
     }
-    
-    public void sumarPExperiencia(){
-        pExperiencia+=1;
+
+    public void sumarPExperiencia(int pEx) {
+        if (nivel < 5) {
+            pExperiencia += pEx;
+        }
     }
-    
-    public void subirEstadisticas(){
-        fuerza++;
-        constitucion++;
-        velocidad++;
-        inteligencia++;
-        suerte++;
-       calculaDerivadas(); 
-    }
-    
-    @Override
-    public String toString() {
-        return nom + " - clase " + classe + "\n"+
-               "Fuerza: " + fuerza + "\nConstitución: " + constitucion + "\nVelocidad: " 
-                + velocidad + "\nInteligencia: " + inteligencia + "\nSuerte: " + suerte + 
-                "\nArma: " + arma + "\nPuntos Salud: " + pSalud + "\nPuntos Daño: " + pDany 
-                + "\n%Ataque: " + pAtacar + "\n%Esquivar: " + pEsquivar + "\nNivel:" + nivel 
-                + "\nPuntos Experiencia: " + pExperiencia;
+
+    public void subirNivel() {
+            nivel++;
+            fuerza++;
+            constitucion++;
+            velocidad++;
+            inteligencia++;
+            suerte++;
+            calculaDerivadas();
     }
 
     public String getNom() {
         return nom;
-    }
-
-    public String getClasse() {
-        return classe;
     }
 
     public int getFuerza() {
@@ -173,7 +159,50 @@ public class Personaje {
     public void setNivel(int nivel) {
         this.nivel = nivel;
     }
-    
-    
-    
+
+    public void setpExperiencia(int pExperiencia) {
+        this.pExperiencia = pExperiencia;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public String getDevocion() {
+        return devocion;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setFuerza(int fuerza) {
+        this.fuerza = fuerza;
+    }
+
+    public void setConstitucion(int constitucion) {
+        this.constitucion = constitucion;
+    }
+
+    public void setVelocidad(int velocidad) {
+        this.velocidad = velocidad;
+    }
+
+    public void setInteligencia(int inteligencia) {
+        this.inteligencia = inteligencia;
+    }
+
+    public void setSuerte(int suerte) {
+        this.suerte = suerte;
+    }
+
+    @Override
+    public String toString() {
+        return nom + " " + categoria + "-" + devocion + "\n"+
+               "Fuerza: " + fuerza + "\nConstitución: " + constitucion + "\nVelocidad: " 
+                + velocidad + "\nInteligencia: " + inteligencia + "\nSuerte: " + suerte + 
+                "\nArma: " + arma + "\nPuntos Salud: " + pSalud + "\nPuntos Daño: " + pDany 
+                + "\n%Ataque: " + pAtacar + "\n%Esquivar: " + pEsquivar + "\nNivel:" + nivel 
+                + "\nPuntos Experiencia: " + pExperiencia;
+    }
 }
