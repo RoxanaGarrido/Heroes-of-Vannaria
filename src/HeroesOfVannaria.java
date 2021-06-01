@@ -425,7 +425,8 @@ public class HeroesOfVannaria {
         int c1 = Tools.llegeixEnterRang(in, 1, personajes.size());
         Personaje atacante = personajes.remove(c1 - 1);
 
-        String categoriaAtacant = atacante.getClass().getSimpleName();
+        //String categoriaAtacant = atacante.getClass().getSimpleName();
+        
         System.out.println("Selecciona el segundo contrincante:");
         mostrarArrayPersonajes(personajes);
         int c2 = Tools.llegeixEnterRang(in, 1, personajes.size());
@@ -461,38 +462,23 @@ public class HeroesOfVannaria {
                         ps = 0;
                     }
                     System.out.println("✚ Puntos de salud restantes ---> " + ps);        
-                    if (OrdenCaos(defensor)) {          
+                    if (OrdenCaos(defensor)) {    
                         switch (categoriaDefensor) {                 
                             case "AsesinoOrden":
-                                ((AsesinoOrden)defensor).recuperaParcialmentPS();
-                                /*
-                                ps = ((AsesinoOrden) defensor).getpSalud();
-                                System.out.println("✚ Puntos de salud restantes ---> " + ps);
-*/
+                                ((AsesinoOrden)defensor).recuperaParcialmentPS();                          
                                 break;
                             case "CaballeroOrden":
-                                ((CaballeroOrden)defensor).recuperaParcialmentPS();
-                                /*
-                                ps = ((CaballeroOrden) defensor).getpSalud();
-                                System.out.println("✚ Puntos de salud restantes ---> " + ps);
-*/
+                                ((CaballeroOrden)defensor).recuperaParcialmentPS();                         
                                 break;
                             case "GuerreroOrden":
-                                ((GuerreroOrden)defensor).recuperaParcialmentPS();   
-                                /*
-                                ps = ((CaballeroOrden) defensor).getpSalud();
-                                System.out.println("✚ Puntos de salud restantes ---> " + ps);
-*/
+                                ((GuerreroOrden)defensor).recuperaParcialmentPS();                          
                                 break;
                             case "ValquiriaOrden":
-                                ((ValquiriaOrden)defensor).recuperaParcialmentPS();    
-                                /*
-                                ps = ((CaballeroOrden) defensor).getpSalud();                      
-                                System.out.println("✚ Puntos de salud restantes ---> " + ps);
-*/
+                                ((ValquiriaOrden)defensor).recuperaParcialmentPS();                             
                                 break;
                         }
                         System.out.println("PERO recupera puntos de salud parcialmente");
+                        ((GuerreroOrden)defensor).recuperaParcialmentPS(); 
                         ps = defensor.getpSalud();
                         if(ps < 0){
                             ps = 0;
@@ -520,7 +506,7 @@ public class HeroesOfVannaria {
                                 break;
                         }
                         if (contraataca) {
-                            System.out.println("...y contraataca exitosamente");
+                            System.out.println("...y " + defensor.getNom() + " contraataca exitosamente");
                             atacante.repDany(defensor);
                             System.out.println(atacante.getNom() + " recibe " + defensor.getpDany() + " puntos de Daño...");
                             int ps = atacante.getpSalud();
@@ -529,7 +515,7 @@ public class HeroesOfVannaria {
                             }
                             System.out.println("✚ Puntos de salud restantes ---> " + ps);
                         }else{
-                            System.out.println("Sin probabilidad de contraataque");
+                            System.out.println("(" + defensor.getNom() + ")" + " Sin probabilidad de contraataque");
                         }
                     }
 
@@ -554,7 +540,7 @@ public class HeroesOfVannaria {
                             break;
                     }
                     if (contraataca) {
-                        System.out.println("...y contraataca exitosamente");
+                        System.out.println("...y " + defensor.getNom() + " contraataca exitosamente");
                         atacante.repDany(defensor);
                         System.out.println(atacante.getNom() + " recibe " + defensor.getpDany() + " puntos de Daño...");
                         int ps = atacante.getpSalud();
@@ -563,7 +549,7 @@ public class HeroesOfVannaria {
                         }
                         System.out.println("✚ Puntos de salud restantes ---> " + ps);
                     }else{
-                        System.out.println("Sin probabilidad de contraataque");
+                        System.out.println("("+defensor.getNom()+") " +" Sin probabilidad de contraataque");
                     }
                 }
             }

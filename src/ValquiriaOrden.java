@@ -20,7 +20,6 @@ public class ValquiriaOrden extends Valquiria implements Orden {
 
     @Override
     public void recuperaParcialmentPS() {
-        calculaDerivadas();
         int pSaludInicial = constitucion + fuerza;
         int recuperacion = (int) pSaludInicial * 10 / 100;
 
